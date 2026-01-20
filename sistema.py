@@ -1,9 +1,15 @@
 import csv
 from medicion import medir_algoritmos
 from algoritmos.normalizacion import normalizar_texto
+import os
 
 
-def cargar_patrones(path):
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def cargar_patrones(path_relativo):
+    path = os.path.join(BASE_DIR, path_relativo)
     patrones = []
     with open(path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -12,13 +18,15 @@ def cargar_patrones(path):
     return patrones
 
 
-def cargar_mensajes(path):
+def cargar_mensajes(path_relativo):
+    path = os.path.join(BASE_DIR, path_relativo)
     mensajes = []
     with open(path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             mensajes.append(row)
     return mensajes
+
 
 
 def analizar_mensaje(mensaje, patrones):

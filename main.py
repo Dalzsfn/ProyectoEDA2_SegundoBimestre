@@ -9,8 +9,8 @@ if __name__ == "__main__":
     ejecutar_menu()
 
 
-patrones = cargar_patrones("data/patrones.csv")
-mensajes = cargar_mensajes("data/mensajes.csv")
+patrones = cargar_patrones("...data/patrones.csv")
+mensajes = cargar_mensajes("...data/mensajes.csv")
 
 print("Patrones cargados:", len(patrones))
 print("Mensajes cargados:", len(mensajes))
