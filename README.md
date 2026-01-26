@@ -107,6 +107,9 @@ Sugerencia de acción: Escalar el reclamo a atención prioritaria
 
 KMP -> posición: 0 | tiempo(ns): 18300
 BM  -> posición: 0 | tiempo(ns): 9400
+
+```
+
 ## 6. Justificación técnica (EDA II)
 
 - El algoritmo **Knuth–Morris–Pratt (KMP)** permite evitar comparaciones redundantes mediante el uso de la función de fallo, garantizando un tiempo de ejecución lineal en el peor caso.
