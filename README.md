@@ -112,7 +112,7 @@ BM  -> posición: 0 | tiempo(ns): 9400
 
 ## 6. Justificación técnica (EDA II)
 
-- El algoritmo **Knuth–Morris–Pratt (KMP)** permite evitar comparaciones redundantes mediante el uso de la función de fallo, garantizando un tiempo de ejecución lineal en el peor caso.
+- El algoritmo **Knuth–Morris–Pratt (KMP)** permite evitar comparaciones redundantes mediante el uso de la función de failure, garantizando un tiempo de ejecución lineal en el peor caso.
 - El algoritmo **Boyer–Moore** optimiza la búsqueda realizando comparaciones desde el final del patrón y aplicando saltos eficientes, lo que en la práctica reduce significativamente el número de comparaciones.
 - Ambos algoritmos son ejecutados sobre los mismos mensajes y patrones, permitiendo una **comparación directa de desempeño**.
 - Las limitaciones semánticas del sistema (sinónimos, ironía, errores gramaticales o contexto) se reconocen explícitamente, ya que el enfoque del proyecto es estrictamente algorítmico y no basado en inteligencia artificial.
@@ -144,6 +144,7 @@ A partir de este punto, el proyecto se encuentra listo para iniciar la **Impleme
 
 ```bash
 python main.py
+```
 ## 9. Nota final
 
 Este README documenta el **avance real del proyecto antes de iniciar la implementación del Trabajo Opcional (Evaluación tipo Examen Final)**, evidenciando el dominio de **algoritmos clásicos de búsqueda de patrones (KMP y Boyer–Moore)**, un diseño **modular y funcional del sistema**, y el **cumplimiento estricto** de los requerimientos establecidos en el curso **Estructuras de Datos y Algoritmos II (EDA II)**.
