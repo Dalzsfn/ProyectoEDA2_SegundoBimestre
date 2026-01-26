@@ -72,6 +72,8 @@ ProyectoEDA2_SegundoBimestre/
 │   └── mensajes.csv       # Mensajes de clientes
 │
 └── Proyecto_EDAII.pdf     # Enunciado oficial del proyecto
+
+```
 ## 4. Flujo lógico del sistema
 
 1. El usuario ejecuta `main.py`.
