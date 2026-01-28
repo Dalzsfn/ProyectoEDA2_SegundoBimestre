@@ -1,0 +1,15 @@
+import { Link } from "react-router-dom"
+
+function Navigation() {
+  return (
+    <nav className="flex gap-4 mt-2 text-sm">
+      <Link to="/" className="hover:underline">Ingreso</Link>
+      <Link to="/patrones" className="hover:underline">Patrones</Link>
+      <Link to="/resultados" className="hover:underline">Resultados</Link>
+      <Link to="/admin" className="hover:underline">Admin</Link>
+      <Link to="/stats" className="hover:underline">Estadísticas</Link>
+    </nav>
+  )
+}
+
+export default Navigation
