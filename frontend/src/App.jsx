@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MessageInput />} />
           <Route path="/patrones" element={<PatternConfig />} />
-          <Route path="/stats" element={<Stats />} />
+          <Route path="/estadisticas" element={<Stats />} />
         </Routes>
       </main>
     </BrowserRouter>

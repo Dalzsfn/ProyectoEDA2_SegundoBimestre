@@ -1,6 +1,9 @@
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from routes.patrones import router as patrones_router
+from medicion import medir_algoritmos
+from algoritmos.normalizacion import normalizar_texto
+from estadisticas import registrar_resultados, obtener_estadisticas
 
 from utils_archivos import (
     leer_txt,
@@ -51,4 +54,14 @@ async def analizar(
     patrones = cargar_patrones(PATRONES_PATH)
     resultados = analizar_mensaje(texto, patrones)
 
+    # 🔥 REGISTRAR ESTADÍSTICAS AQUÍ
+    registrar_resultados(resultados)
+
     return {"resultados": resultados}
+
+
+@app.get("/estadisticas")
+def estadisticas():
+    return obtener_estadisticas()
+
+
