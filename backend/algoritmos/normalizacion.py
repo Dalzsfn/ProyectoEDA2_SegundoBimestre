@@ -4,12 +4,17 @@ import re
 
 def normalizar_texto(texto: str) -> str:
     """
-    Convierte el texto a una forma normalizada:
+    Normaliza texto para análisis:
     - Minúsculas
     - Sin tildes
     - Sin signos de puntuación
+    - Sin saltos de línea
+    - Sin espacios duplicados
     """
-    # pasar a minúsculas
+    if not texto:
+        return ""
+
+    # minúsculas
     texto = texto.lower()
 
     # eliminar tildes
@@ -19,6 +24,9 @@ def normalizar_texto(texto: str) -> str:
     )
 
     # eliminar signos de puntuación
-    texto = re.sub(r'[^\w\s]', '', texto)
+    texto = re.sub(r'[^\w\s]', ' ', texto)
 
-    return texto
+    # eliminar saltos de línea y espacios múltiples
+    texto = re.sub(r'\s+', ' ', texto)
+
+    return texto.strip()

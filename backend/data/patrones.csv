@@ -1,8 +1,8 @@
 patron,categoria,nivel_alerta,sugerencia
-pésimo servicio,Reclamo crítico,Alto,Escalar el reclamo a atención prioritaria
+pesimo servicio,Reclamo crítico,Alto,Escalar el reclamo a atención prioritaria
 muy mal servicio,Reclamo crítico,Alto,Asignar supervisor y seguimiento inmediato
 nunca solucionan nada,Reclamo crítico,Alto,Revisar historial del cliente y escalar caso
-cancelaré el servicio,Reclamo crítico,Alto,Contactar al cliente para retención
+cancelaré el servicio,Reclamo crítico,Alto,Contactar al cliente para retención inmediata
 cancelar el servicio,Reclamo crítico,Alto,Ofrecer beneficios para evitar cancelación
 voy a demandar,Riesgo legal,Crítico,Derivar el caso al departamento legal
 los voy a demandar,Riesgo legal,Crítico,Activar protocolo legal inmediato
@@ -14,23 +14,18 @@ no es justo,Reclamo,Medio,Revisar políticas y responder al cliente
 mal servicio,Queja leve,Bajo,Enviar disculpas y encuesta de satisfacción
 no estoy satisfecho,Queja leve,Bajo,Contactar al cliente para mejorar experiencia
 muy lento,Queja leve,Bajo,Optimizar tiempos de atención
-Son una huevada,Reclamo,Alto,Dejar de ser una huevada
-prueba,test,alta,solo prueba
-hola,Reclamo,Medio,hola
-prueba123,Reclamo,Medio,prueba123
-pruebitaaaaa,Reclamo,Medio,pruebota
-pruebitaaaa,Reclamo,Medio,pruebota
-prueba,Reclamo,Medio,aaaaaaaaaaaa
-pruebita,Reclamo,Medio,pruebota
-holaaa,Reclamo,Medio,Responder saludo
-ola,Queja leve,Bajo,Ignorar o responder cordialmente
-pésimo servicio,Reclamo crítico,Alto,Escalar reclamo al supervis
-fraude,Riesgo legal,Cr��tico,Derivar al ��r
-malaaaaaaaaaa atenci��n,Queja leve,Bajo,Registrar y monito
-pésimo servicio,Reclamo crítico,Alto,Escalar reclamo al supervis
-fraude,Riesgo legal,Cr��tico,Derivar al ��r
-malaaaaaaaaaa atenci��n,Queja leve,Bajo,Registrar y monito
-patron,categoria,nivel_alerta,sugerencia
-pésimo servicio,Reclamo crítico,Alto,Escalar reclamo al supervisor
-fraude,Riesgo legal,Crítico,Derivar al área legal
+producto defectuoso,Reclamo,Medio,Ofrecer reemplazo o reembolso
+no funciona como prometen,Reclamo,Medio,Revisar información brindada al cliente
+atención horrible,Reclamo,Medio,Capacitar al personal de atención
+horrible servicio,Reclamo,Medio,Realizar seguimiento post-atención
+terrible servicio,Reclamo,Medio,Implementar mejoras inmediatas
+fatal servicio,Reclamo,Medio,Analizar causas y tomar acciones correctivas
+deplorable atención,Reclamo,Medio,Revisar procesos internos
+inolvidable mala experiencia,Reclamo,Medio,Contactar al cliente para resolver
+inolvidable experiencia negativa,Reclamo,Medio,Ofrecer compensación
+demasiado caro,Queja leve,Bajo,Comparar precios con la competencia
+muy caro,Queja leve,Bajo,Ofrecer promociones o descuentos
+excesivamente caro,Queja leve,Bajo,Evaluar estructura de precios
+cobro adicional indebido,Reclamo,Medio,Explicar cargos y ofrecer solución
+información confusa,Reclamo,Medio,Revisar y actualizar materiales informativos
 malaaaaaaaaaa atención,Queja leve,Bajo,Registrar y monitorear

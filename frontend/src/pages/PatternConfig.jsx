@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import FileUpload from "../components/FileUpload"
 
 function PatternConfig() {
@@ -16,7 +16,11 @@ function PatternConfig() {
   const [mensajeArchivo, setMensajeArchivo] = useState(null)
   const [errorArchivo, setErrorArchivo] = useState(null)
 
-  // ---------- AGREGAR MANUAL ----------
+  // ---------- LISTADO ----------
+  const [patrones, setPatrones] = useState([])
+  const [filtroCategoria, setFiltroCategoria] = useState("Todos")
+
+  // ================== AGREGAR MANUAL ==================
   const agregarPatron = async () => {
     setMensajeManual(null)
     setErrorManual(null)
@@ -46,21 +50,14 @@ function PatternConfig() {
         setMensajeManual("✅ Patrón agregado correctamente")
         setPatron("")
         setSugerencia("")
+        cargarPatrones()
       }
-
     } catch {
       setErrorManual("No se pudo conectar con el servidor")
     }
   }
 
-  // ---------- ELIMINAR ARCHIVO ----------
-  const eliminarArchivo = () => {
-    setArchivo(null)
-    setMensajeArchivo(null)
-    setErrorArchivo(null)
-  }
-
-  // ---------- CARGAR ARCHIVO ----------
+  // ================== CARGAR ARCHIVO ==================
   const subirArchivo = async () => {
     if (!archivo) return
 
@@ -81,46 +78,80 @@ function PatternConfig() {
       if (data.error) {
         setErrorArchivo(data.error)
       } else {
-        setMensajeArchivo(
-          `✅ ${data.cantidad} patrones cargados correctamente`
-        )
+        setMensajeArchivo(`✅ ${data.cantidad} patrones cargados`)
         setArchivo(null)
+        cargarPatrones()
       }
-
     } catch {
       setErrorArchivo("No se pudo conectar con el servidor")
     }
   }
 
+  const eliminarArchivo = () => {
+    setArchivo(null)
+    setMensajeArchivo(null)
+    setErrorArchivo(null)
+  }
+
+  // ================== LISTAR ==================
+  const cargarPatrones = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/patrones")
+      const data = await res.json()
+      setPatrones(data)
+    } catch {
+      console.error("Error cargando patrones")
+    }
+  }
+
+  // ================== ELIMINAR (por patron) ==================
+  const eliminarPatron = async (patron) => {
+    if (!confirm("¿Eliminar este patrón?")) return
+
+    await fetch(
+      `http://127.0.0.1:8000/patrones/${encodeURIComponent(patron)}`,
+      { method: "DELETE" }
+    )
+
+    cargarPatrones()
+  }
+
+  useEffect(() => {
+    cargarPatrones()
+  }, [])
+
+  const patronesFiltrados =
+    filtroCategoria === "Todos"
+      ? patrones
+      : patrones.filter(p => p.categoria === filtroCategoria)
+
   return (
-    <div className="max-w-3xl mx-auto space-y-10">
+    <div className="max-w-4xl mx-auto space-y-10">
 
       {/* ================= MANUAL ================= */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold">
-          ➕ Agregar patrón manualmente
-        </h2>
+        <h2 className="text-xl font-bold">➕ Agregar patrón</h2>
 
         <input
-          className="border rounded p-2 w-full"
-          placeholder="Patrón (texto a buscar)"
+          className="border p-2 w-full"
+          placeholder="Patrón"
           value={patron}
           onChange={e => setPatron(e.target.value)}
         />
 
         <select
-          className="border rounded p-2 w-full"
+          className="border p-2 w-full"
           value={categoria}
           onChange={e => setCategoria(e.target.value)}
         >
+          <option>Queja</option>
+          <option>Reclamo</option>
           <option>Reclamo crítico</option>
           <option>Riesgo legal</option>
-          <option>Reclamo</option>
-          <option>Queja leve</option>
         </select>
 
         <select
-          className="border rounded p-2 w-full"
+          className="border p-2 w-full"
           value={alerta}
           onChange={e => setAlerta(e.target.value)}
         >
@@ -131,58 +162,41 @@ function PatternConfig() {
         </select>
 
         <textarea
-          className="border rounded p-2 w-full"
-          placeholder="Sugerencia de acción"
+          className="border p-2 w-full"
+          placeholder="Sugerencia"
           value={sugerencia}
           onChange={e => setSugerencia(e.target.value)}
         />
 
         <button
           onClick={agregarPatron}
-          className="bg-blue-600 text-white px-5 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
         >
-          Guardar patrón
+          Guardar
         </button>
 
-        {mensajeManual && (
-          <div className="bg-green-100 text-green-700 p-3 rounded">
-            {mensajeManual}
-          </div>
-        )}
-
-        {errorManual && (
-          <div className="bg-red-100 text-red-700 p-3 rounded">
-            {errorManual}
-          </div>
-        )}
+        {mensajeManual && <p className="text-green-600">{mensajeManual}</p>}
+        {errorManual && <p className="text-red-600">{errorManual}</p>}
       </section>
 
       {/* ================= ARCHIVO ================= */}
       <section className="space-y-4">
-        <h2 className="text-xl font-bold">
-          📂 Cargar patrones desde archivo
-        </h2>
+        <h2 className="text-xl font-bold">📂 Cargar desde archivo</h2>
 
-        {/* FILE UPLOAD */}
         {!archivo && (
           <FileUpload
-            key={archivo ? archivo.name : "empty"}   // 👈 resetea input
-            title="Subir archivo de patrones"
+            title="Subir archivo"
             description="TXT, CSV o Excel"
-            onFileSelect={file => setArchivo(file)}
+            onFileSelect={setArchivo}
           />
         )}
 
-        {/* ARCHIVO SELECCIONADO */}
         {archivo && (
-          <div className="flex items-center justify-between bg-gray-100 p-3 rounded">
-            <span className="text-sm">
-              📎 <strong>{archivo.name}</strong>
-            </span>
-
+          <div className="flex justify-between bg-gray-100 p-3 rounded">
+            <span>📎 {archivo.name}</span>
             <button
               onClick={eliminarArchivo}
-              className="text-red-600 text-sm hover:underline"
+              className="text-red-600"
             >
               Eliminar
             </button>
@@ -192,22 +206,48 @@ function PatternConfig() {
         <button
           onClick={subirArchivo}
           disabled={!archivo}
-          className="bg-green-600 text-white px-5 py-2 rounded disabled:opacity-50"
+          className="bg-green-600 text-white px-4 py-2 rounded"
         >
-          Cargar archivo
+          Cargar
         </button>
+      </section>
 
-        {mensajeArchivo && (
-          <div className="bg-green-100 text-green-700 p-3 rounded">
-            {mensajeArchivo}
-          </div>
-        )}
+      {/* ================= LISTADO ================= */}
+      <section className="space-y-4">
+        <h2 className="text-xl font-bold">📋 Patrones existentes</h2>
 
-        {errorArchivo && (
-          <div className="bg-red-100 text-red-700 p-3 rounded">
-            {errorArchivo}
+        <select
+          className="border p-2"
+          value={filtroCategoria}
+          onChange={e => setFiltroCategoria(e.target.value)}
+        >
+          <option>Todos</option>
+          <option>Queja</option>
+          <option>Reclamo</option>
+          <option>Reclamo crítico</option>
+          <option>Riesgo legal</option>
+        </select>
+
+        {patronesFiltrados.map(p => (
+          <div
+            key={p.patron}
+            className="border rounded p-3 flex justify-between"
+          >
+            <div>
+              <b>{p.patron}</b>
+              <p className="text-sm">
+                {p.categoria} · {p.nivel_alerta}
+              </p>
+            </div>
+
+            <button
+              onClick={() => eliminarPatron(p.patron)}
+              className="text-red-600"
+            >
+              Eliminar
+            </button>
           </div>
-        )}
+        ))}
       </section>
 
     </div>

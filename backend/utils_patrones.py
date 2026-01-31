@@ -1,19 +1,22 @@
 import csv
 import io
 import pandas as pd
-import os
+from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PATRONES_PATH = os.path.join(BASE_DIR, "data", "patrones.csv")
+# backend/
+BASE_DIR = Path(__file__).resolve().parent
+PATRONES_PATH = BASE_DIR / "data" / "patrones.csv"
 
-# 📥 LEER PATRONES DESDE CSV
+# ===============================
+# 📥 LEER PATRONES DESDE ARCHIVOS
+# ===============================
+
 def leer_patrones_csv(archivo):
     contenido = archivo.file.read().decode("utf-8-sig")
     reader = csv.reader(io.StringIO(contenido))
     patrones = []
 
     next(reader, None)  # saltar encabezado
-
     for fila in reader:
         if len(fila) < 4:
             continue
@@ -27,24 +30,21 @@ def leer_patrones_csv(archivo):
     return patrones
 
 
-
-# 📥 LEER PATRONES DESDE EXCEL
 def leer_patrones_excel(archivo):
     df = pd.read_excel(archivo.file)
     patrones = []
 
     for _, fila in df.iterrows():
         patrones.append({
-            "patron": str(fila[0]),
-            "categoria": str(fila[1]),
-            "nivel_alerta": str(fila[2]),
-            "sugerencia": str(fila[3])
+            "patron": str(fila[0]).strip(),
+            "categoria": str(fila[1]).strip(),
+            "nivel_alerta": str(fila[2]).strip(),
+            "sugerencia": str(fila[3]).strip()
         })
 
     return patrones
 
 
-# 📥 LEER PATRONES DESDE TXT
 def leer_patrones_txt(archivo):
     contenido = archivo.file.read().decode("utf-8")
     patrones = []
@@ -54,23 +54,37 @@ def leer_patrones_txt(archivo):
         if len(partes) < 4:
             continue
         patrones.append({
-            "patron": partes[0],
-            "categoria": partes[1],
-            "nivel_alerta": partes[2],
-            "sugerencia": partes[3]
+            "patron": partes[0].strip(),
+            "categoria": partes[1].strip(),
+            "nivel_alerta": partes[2].strip(),
+            "sugerencia": partes[3].strip()
         })
 
     return patrones
 
 
-# 💾 GUARDAR PATRONES EN CSV
+# ===============================
+# 💾 CSV BASE (ÚNICA FUENTE)
+# ===============================
+
+def leer_patrones_csv_base():
+    if not PATRONES_PATH.exists():
+        return []
+
+    with open(PATRONES_PATH, newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+
 def guardar_patrones(patrones):
-    with open(PATRONES_PATH, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        for p in patrones:
-            writer.writerow([
-                p["patron"],
-                p["categoria"],
-                p["nivel_alerta"],
-                p["sugerencia"]
-            ])
+    print("🟢 GUARDANDO EN:", PATRONES_PATH.resolve())
+    print("🟢 TOTAL:", len(patrones))
+
+    PATRONES_PATH.parent.mkdir(exist_ok=True)
+
+    with open(PATRONES_PATH, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["patron", "categoria", "nivel_alerta", "sugerencia"]
+        )
+        writer.writeheader()
+        writer.writerows(patrones)

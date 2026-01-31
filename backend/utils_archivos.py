@@ -1,10 +1,10 @@
-from typing import List
 import csv
 import io
-
 from PyPDF2 import PdfReader
 import pandas as pd
 from fastapi import UploadFile
+
+from algoritmos.normalizacion import normalizar_texto
 
 
 # =====================
@@ -12,7 +12,7 @@ from fastapi import UploadFile
 # =====================
 def leer_txt(archivo: UploadFile) -> str:
     contenido = archivo.file.read().decode("utf-8", errors="ignore")
-    return contenido
+    return normalizar_texto(contenido)
 
 
 # =====================
@@ -23,14 +23,15 @@ def leer_pdf(archivo: UploadFile) -> str:
     texto = ""
 
     for pagina in reader.pages:
-        texto += pagina.extract_text() or ""
+        extraido = pagina.extract_text()
+        if extraido:
+            texto += extraido + " "
 
-    return texto
+    return normalizar_texto(texto)
 
 
 # =====================
 # 📊 CSV → TEXTO
-# (para ANALIZAR MENSAJES)
 # =====================
 def leer_csv_como_texto(archivo: UploadFile) -> str:
     contenido = archivo.file.read().decode("utf-8", errors="ignore")
@@ -38,20 +39,19 @@ def leer_csv_como_texto(archivo: UploadFile) -> str:
 
     texto = ""
     for fila in lector:
-        texto += " ".join(fila) + "\n"
+        texto += " ".join(fila) + " "
 
-    return texto
+    return normalizar_texto(texto)
 
 
 # =====================
 # 📊 EXCEL → TEXTO
-# (para ANALIZAR MENSAJES)
 # =====================
 def leer_excel_como_texto(archivo: UploadFile) -> str:
     df = pd.read_excel(archivo.file)
 
     texto = ""
     for _, fila in df.iterrows():
-        texto += " ".join(map(str, fila.values)) + "\n"
+        texto += " ".join(map(str, fila.values)) + " "
 
-    return texto
+    return normalizar_texto(texto)
