@@ -7,9 +7,6 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent
 PATRONES_PATH = BASE_DIR / "data" / "patrones.csv"
 
-# ===============================
-# 📥 LEER PATRONES DESDE ARCHIVOS
-# ===============================
 
 def leer_patrones_csv(archivo):
     contenido = archivo.file.read().decode("utf-8-sig")
@@ -63,9 +60,6 @@ def leer_patrones_txt(archivo):
     return patrones
 
 
-# ===============================
-# 💾 CSV BASE (ÚNICA FUENTE)
-# ===============================
 
 def leer_patrones_csv_base():
     if not PATRONES_PATH.exists():

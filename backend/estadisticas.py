@@ -2,9 +2,7 @@ from collections import defaultdict
 from typing import Dict, List
 
 
-# ===============================
-# 📊 ESTADO GLOBAL DE ESTADÍSTICAS
-# ===============================
+
 _estadisticas = {
     "total_analisis": 0,
     "tiempo_kmp_ns": [],
@@ -15,9 +13,6 @@ _estadisticas = {
 
 
 
-# ===============================
-# ➕ REGISTRAR UNA EJECUCIÓN
-# ===============================
 def registrar_resultados(resultados: List[Dict]):
     _estadisticas["total_analisis"] += 1
 
@@ -47,9 +42,6 @@ def registrar_resultados(resultados: List[Dict]):
 
 
 
-# ===============================
-# 📈 OBTENER ESTADÍSTICAS
-# ===============================
 def obtener_estadisticas():
 
     def promedio(valores):
@@ -70,9 +62,6 @@ def obtener_estadisticas():
 
 
 
-# ===============================
-# 🔄 RESET (OPCIONAL)
-# ===============================
 def reset_estadisticas():
     """
     Limpia todas las estadísticas (útil para pruebas).

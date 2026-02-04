@@ -12,9 +12,6 @@ from utils_patrones import (
 
 router = APIRouter()
 
-# ===============================
-# 📦 MODELO (Swagger FUNCIONA)
-# ===============================
 class PatronEntrada(BaseModel):
     patron: str
     categoria: str
@@ -22,17 +19,11 @@ class PatronEntrada(BaseModel):
     sugerencia: str
 
 
-# ===============================
-# 📋 GET
-# ===============================
 @router.get("/patrones")
 def obtener_patrones():
     return leer_patrones_csv_base()
 
 
-# ===============================
-# ➕ POST MANUAL
-# ===============================
 @router.post("/patrones")
 def agregar_patron(patron: PatronEntrada):
     patrones = leer_patrones_csv_base()
@@ -51,9 +42,6 @@ def agregar_patron(patron: PatronEntrada):
     return {"ok": True}
 
 
-# ===============================
-# ❌ DELETE
-# ===============================
 @router.delete("/patrones/{patron}")
 def eliminar_patron(patron: str):
     patron = unquote(patron)
@@ -63,9 +51,6 @@ def eliminar_patron(patron: str):
     return {"ok": True}
 
 
-# ===============================
-# 📂 CARGAR ARCHIVO
-# ===============================
 @router.post("/patrones/cargar-archivo")
 async def cargar_archivo(archivo: UploadFile = File(...)):
     if not archivo.filename:

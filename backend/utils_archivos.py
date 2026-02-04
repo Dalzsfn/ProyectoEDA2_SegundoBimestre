@@ -7,9 +7,6 @@ from fastapi import UploadFile
 from algoritmos.normalizacion import normalizar_texto
 
 
-# =====================
-# 📄 TXT → TEXTO
-# =====================
 def leer_txt(archivo: UploadFile) -> str:
     contenido = archivo.file.read().decode("utf-8", errors="ignore")
     texto = normalizar_texto(contenido)
@@ -21,9 +18,6 @@ def leer_txt(archivo: UploadFile) -> str:
 
 
 
-# =====================
-# 📄 PDF → TEXTO
-# =====================
 def leer_pdf(archivo: UploadFile) -> str:
     reader = PdfReader(archivo.file)
     texto = ""
@@ -42,9 +36,6 @@ def leer_pdf(archivo: UploadFile) -> str:
 
 
 
-# =====================
-# 📊 CSV → TEXTO
-# =====================
 def leer_csv_como_texto(archivo: UploadFile) -> str:
     contenido = archivo.file.read().decode("utf-8", errors="ignore")
     lector = csv.reader(io.StringIO(contenido))
@@ -62,9 +53,6 @@ def leer_csv_como_texto(archivo: UploadFile) -> str:
 
 
 
-# =====================
-# 📊 EXCEL → TEXTO
-# =====================
 def leer_excel_como_texto(archivo: UploadFile) -> str:
     df = pd.read_excel(archivo.file)
 
