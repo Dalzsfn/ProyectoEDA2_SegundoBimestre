@@ -16,7 +16,7 @@ function Header() {
             WISEcheck
           </h1>
           <p className="text-sm text-gray-500">
-            Mockup – Estructuras de Datos II
+            Estructuras de Datos II
           </p>
         </div>
       </div>
